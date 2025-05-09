@@ -26,11 +26,19 @@ resource "azurerm_app_service" "app_service" {
   }
 }
 
-resource "azurerm_function_app" "example" {
+resource "azurerm_function_app" "function_app" {
   name                       = "${var.project}-${var.env}-azure-functions"
   location                   = var.location
   resource_group_name        = var.rg_name
   app_service_plan_id        = azurerm_app_service_plan.service_plan.id
   storage_account_name       = var.storage_name
   storage_account_access_key = var.storage_primary_access_key
+}
+resource "azurerm_app_service_virtual_network_swift_connection" "app_service_connection" {
+  app_service_id = azurerm_app_service.app_service.id
+  subnet_id      = var.subnet_id
+}
+resource "azurerm_app_service_virtual_network_swift_connection" "app_function_connection" {
+  app_service_id = azurerm_function_app.function_app.id
+  subnet_id      = var.subnet_id
 }

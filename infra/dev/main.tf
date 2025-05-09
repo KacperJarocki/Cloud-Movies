@@ -21,4 +21,5 @@ module "compute" {
   project                    = var.project
   storage_name               = module.storage.storage_name
   storage_primary_access_key = module.storage.storage_primary_access_key
+  subnet_id                  = module.network.subnet_id
 }

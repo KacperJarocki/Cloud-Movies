@@ -18,3 +18,6 @@ variable "storage_name" {
 variable "storage_primary_access_key" {
   type = string
 }
+variable "subnet_id" {
+
+}
