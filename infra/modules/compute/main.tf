@@ -39,6 +39,7 @@ resource "azurerm_function_app" "function_app" {
     "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.instrumentation_key_insight
     "APPLICATIONINSIGHTS_CONNECTION_STRING"      = var.connection_string_insight
     "ApplicationInsightsAgent_EXTENSION_VERSION" = "~2"
+    "COSMOSDB_CONNECTION_STRING"                 = var.cosmos_db_connection_string
   }
 }
 resource "azurerm_app_service_virtual_network_swift_connection" "app_service_connection" {

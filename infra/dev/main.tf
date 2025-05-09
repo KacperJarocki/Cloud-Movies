@@ -1,9 +1,16 @@
-
 module "network" {
   source   = "../modules/network"
   project  = var.project
   env      = var.env
   location = var.location
+}
+
+module "backend" {
+  source   = "../modules/backend"
+  rg_name  = module.network.rg_name
+  location = var.location
+  project  = var.project
+  env      = var.env
 }
 module "storage" {
   source   = "../modules/storage"
@@ -31,4 +38,5 @@ module "compute" {
   subnet_id                   = module.network.subnet_id
   instrumentation_key_insight = module.monitoring.instrumentation_key
   connection_string_insight   = module.monitoring.connection_string
+  cosmos_db_connection_string = module.storage.cosmos_db_connection_string
 }

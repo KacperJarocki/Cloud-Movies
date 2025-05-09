@@ -29,3 +29,7 @@ variable "connection_string_insight" {
 variable "instrumentation_key_insight" {
   type = string
 }
+variable "cosmos_db_connection_string" {
+  description = "Connection string to the Cosmos DB"
+  type        = string
+}
