@@ -11,5 +11,5 @@ variable "location" {
 
 variable "project" {
   type    = string
-  default = "cloudmovies"
+  default = "cloudmoviess"
 }
