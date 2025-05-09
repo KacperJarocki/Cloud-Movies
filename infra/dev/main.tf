@@ -4,14 +4,6 @@ module "network" {
   env      = var.env
   location = var.location
 }
-
-module "backend" {
-  source   = "../modules/backend"
-  rg_name  = module.network.rg_name
-  location = var.location
-  project  = var.project
-  env      = var.env
-}
 module "storage" {
   source   = "../modules/storage"
   rg_name  = module.network.rg_name

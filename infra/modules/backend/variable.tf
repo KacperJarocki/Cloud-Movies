@@ -13,7 +13,7 @@ variable "project" {
   type        = string
 }
 
-variable "env" {
+variable "envs" {
   description = "Environment (e.g., dev, prod)"
-  type        = string
+  type        = list(string)
 }
