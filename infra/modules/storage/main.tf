@@ -49,3 +49,32 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
     environment = var.env
   }
 }
+
+resource "azurerm_cosmosdb_account" "cosmos" {
+  name                = "${var.project}${var.env}cosmos"
+  location            = var.location
+  resource_group_name = var.rg_name
+  offer_type          = "Standard"
+  kind                = "GlobalDocumentDB"
+
+  enable_free_tier = true
+
+  consistency_policy {
+    consistency_level = "Session"
+  }
+
+  geo_location {
+    location          = var.location
+    failover_priority = 0
+  }
+
+  tags = {
+    environment = var.env
+  }
+}
+
+resource "azurerm_cosmosdb_sql_database" "db" {
+  name                = "${var.project}-${var.env}-db"
+  resource_group_name = var.rg_name
+  account_name        = azurerm_cosmosdb_account.cosmos.name
+}
