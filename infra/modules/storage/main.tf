@@ -31,7 +31,6 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
   is_http_allowed     = true
   is_https_allowed    = true
   origin_host_header  = azurerm_storage_account.storage_account.primary_web_host
-  origin_path         = "/"
   content_types_to_compress = [
     "text/html",
     "text/css",
@@ -42,8 +41,9 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
 
   origin {
     name      = "storageorigin"
-    host_name = replace(azurerm_storage_account.storage_account.primary_web_endpoint, "https://", "")
+    host_name = replace(trim(azurerm_storage_account.storage_account.primary_web_endpoint, "/"), "https://", "")
   }
+
 
   tags = {
     environment = var.env
@@ -56,8 +56,6 @@ resource "azurerm_cosmosdb_account" "cosmos" {
   resource_group_name = var.rg_name
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
-
-  enable_free_tier = true
 
   consistency_policy {
     consistency_level = "Session"
