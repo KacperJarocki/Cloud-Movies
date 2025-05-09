@@ -21,3 +21,11 @@ variable "storage_primary_access_key" {
 variable "subnet_id" {
 
 }
+
+variable "connection_string_insight" {
+  type = string
+}
+
+variable "instrumentation_key_insight" {
+  type = string
+}

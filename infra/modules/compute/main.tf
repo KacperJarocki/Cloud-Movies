@@ -16,7 +16,9 @@ resource "azurerm_app_service" "app_service" {
   app_service_plan_id = azurerm_app_service_plan.service_plan.id
 
   app_settings = {
-    "SOME_KEY" = "some-value"
+    "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.instrumentation_key_insight
+    "APPLICATIONINSIGHTS_CONNECTION_STRING"      = var.connection_string_insight
+    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~2"
   }
 
   connection_string {
@@ -33,6 +35,11 @@ resource "azurerm_function_app" "function_app" {
   app_service_plan_id        = azurerm_app_service_plan.service_plan.id
   storage_account_name       = var.storage_name
   storage_account_access_key = var.storage_primary_access_key
+  app_settings = {
+    "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.instrumentation_key_insight
+    "APPLICATIONINSIGHTS_CONNECTION_STRING"      = var.connection_string_insight
+    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~2"
+  }
 }
 resource "azurerm_app_service_virtual_network_swift_connection" "app_service_connection" {
   app_service_id = azurerm_app_service.app_service.id
