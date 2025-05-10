@@ -4,5 +4,7 @@ terraform {
     storage_account_name = "cloudmoviesstfstate"
     container_name       = "tfstatedev"
     key                  = "terraform.tfstate"
+    use_oidc             = true
+
   }
 }
