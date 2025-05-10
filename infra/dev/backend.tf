@@ -5,6 +5,5 @@ terraform {
     container_name       = "tfstatedev"
     key                  = "terraform.tfstate"
     use_oidc             = true
-
   }
 }
