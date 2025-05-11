@@ -26,6 +26,10 @@ resource "azurerm_app_service" "app_service" {
     type  = "SQLServer"
     value = "Server=some-server.mydomain.com;Integrated Security=SSPI"
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azurerm_function_app" "function_app" {
@@ -40,6 +44,9 @@ resource "azurerm_function_app" "function_app" {
     "APPLICATIONINSIGHTS_CONNECTION_STRING"      = var.connection_string_insight
     "ApplicationInsightsAgent_EXTENSION_VERSION" = "~2"
     "COSMOSDB_CONNECTION_STRING"                 = var.cosmos_db_connection_string
+  }
+  identity {
+    type = "SystemAssigned"
   }
 }
 resource "azurerm_app_service_virtual_network_swift_connection" "app_service_connection" {
