@@ -4,6 +4,7 @@ module "network" {
   env      = var.env
   location = var.location
 }
+
 module "storage" {
   source   = "../modules/storage"
   rg_name  = module.network.rg_name
@@ -11,6 +12,7 @@ module "storage" {
   env      = var.env
   project  = var.project
 }
+
 module "monitoring" {
   source   = "../modules/monitoring"
   rg_name  = module.network.rg_name
@@ -19,16 +21,18 @@ module "monitoring" {
   project  = var.project
 }
 
-module "compute" {
-  source                      = "../modules/compute"
-  rg_name                     = module.network.rg_name
-  location                    = var.location
-  env                         = var.env
-  project                     = var.project
-  storage_name                = module.storage.storage_name
-  storage_primary_access_key  = module.storage.storage_primary_access_key
-  subnet_id                   = module.network.subnet_id
-  instrumentation_key_insight = module.monitoring.instrumentation_key
-  connection_string_insight   = module.monitoring.connection_string
-  cosmos_db_connection_string = module.storage.cosmos_db_connection_string
+module "keyvault" {
+  source              = "../modules/keyvault"
+  name_prefix         = "${var.project}-${var.env}"
+  location            = var.location
+  resource_group_name = module.network.rg_name
+  tags                = { environment = var.env }
+
+  secrets = {
+    "CosmosDbConnection"            = module.storage.cosmos_db_connection_string
+    "AppInsightsInstrumentationKey" = module.monitoring.instrumentation_key
+    "AppInsightsConnectionString"   = module.monitoring.connection_string
+  }
 }
+
+
